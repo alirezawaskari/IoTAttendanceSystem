@@ -7,8 +7,8 @@
 const int rst = 2, enr = 3;
 SoftwareSerial sensor(7, 8); // rx , tx 
 
-const char* ssid = "Galaxy Note9";
-const char* password = "Awa2a0w0a1";
+const char* ssid = "yourSSID";
+const char* password = "yourPASSWD";
 
 //Your Domain name with URL path or IP address with path
 String serverName = "http://192.168.253.128:80/";
