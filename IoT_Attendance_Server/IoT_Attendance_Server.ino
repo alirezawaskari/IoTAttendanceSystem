@@ -7,11 +7,11 @@
 const int rst = 2, enr = 3;
 SoftwareSerial sensor(7, 8); // rx , tx 
 
-const char* ssid = "yourSSID";
-const char* password = "yourPASSWD";
+const char* ssid = "Galaxy Note9";
+const char* password = "Awa2a0w0a1";
 
 //Your Domain name with URL path or IP address with path
-String serverName = "http://192.168.253.128:80/";
+String serverName = "http://192.168.43.122:80/";
 
 uint8_t id; // for incoming serial data
 
@@ -36,9 +36,10 @@ void setup() {
 void loop() {
   //Check WiFi connection status
   if(WiFi.status()== WL_CONNECTED){
+    WiFiClient client;
+    HTTPClient http;
     if ( (digitalRead(rst) == LOW) && !(digitalRead(enr) == LOW) ) {
-      WiFiClient client;
-      HTTPClient http;
+      Serial.println("Inside resetter condition");
       if (sensor.available() > 0) {
         String serverPath = serverName + "resetter.php/";
 
@@ -49,7 +50,7 @@ void loop() {
         int httpResponseCode = http.GET();
         
         if (httpResponseCode>0) {
-          Serial.print("HTTP Response code: ");
+          Serial.print("resetter HTTP Response code: ");
           Serial.println(httpResponseCode);
           String payload = http.getString();
           Serial.println(payload);
@@ -62,11 +63,11 @@ void loop() {
         http.end();
       }
     } else if ( (digitalRead(enr) == LOW) && !(digitalRead(rst)  == LOW) ) {
+      Serial.println("Inside enroller condition");
       if (Serial.available() > 0) {
-        WiFiClient client;
-        HTTPClient http;
         // read the incoming byte:
-        id = sensor.read();
+        // id = sensor.read();
+        id = Serial.read();
         String serverPath = serverName + "enroller.php/";
         serverPath = serverPath + "?id=";
         serverPath = serverPath + id;
@@ -78,7 +79,7 @@ void loop() {
         int httpResponseCode = http.GET();
         
         if (httpResponseCode>0) {
-          Serial.print("HTTP Response code: ");
+          Serial.print("enroller HTTP Response code: ");
           Serial.println(httpResponseCode);
           String payload = http.getString();
           Serial.println(payload);
@@ -91,11 +92,11 @@ void loop() {
         http.end();
       }
     } else if ( (digitalRead(enr) == LOW) && (digitalRead(rst) == LOW) ) {
+      Serial.println("Inside deleter condition");
       if (Serial.available() > 0) {
-        WiFiClient client;
-        HTTPClient http;
         // read the incoming byte:
-        id = sensor.read();
+        // id = sensor.read();
+        id = Serial.read();
         String serverPath = serverName + "deleter.php/";
         serverPath = serverPath + "?id=";
         serverPath = serverPath + id;
@@ -107,7 +108,7 @@ void loop() {
         int httpResponseCode = http.GET();
         
         if (httpResponseCode>0) {
-          Serial.print("HTTP Response code: ");
+          Serial.print("deleter HTTP Response code: ");
           Serial.println(httpResponseCode);
           String payload = http.getString();
           Serial.println(payload);
@@ -120,11 +121,11 @@ void loop() {
         http.end();
       }
     } else {
+      Serial.println("Inside listener condition");
       if (Serial.available() > 0) {
-        WiFiClient client;
-        HTTPClient http;
         // read the incoming byte:
-        id = sensor.read();
+        // id = sensor.read();
+        id = Serial.read();
         String serverPath = serverName + "listener.php/";
         serverPath = serverPath + "?id=";
         serverPath = serverPath + id;
@@ -136,7 +137,7 @@ void loop() {
         int httpResponseCode = http.GET();
         
         if (httpResponseCode>0) {
-          Serial.print("HTTP Response code: ");
+          Serial.print("listener HTTP Response code: ");
           Serial.println(httpResponseCode);
           String payload = http.getString();
           Serial.println(payload);
