@@ -14,11 +14,12 @@ if ($conn->connect_error) {
 }
 
 // DB query
-$sql = "DELETE FROM `stats`;";
+$sql = "DELETE FROM `logs`;";
 
 // Send query
 if ($conn->query($sql) === TRUE) {
-	return "DB cleared successfully";
+	header('Location: /');
+	return "Logs cleared successfully";
 }
 else {
 	return "Error: ".$sql."<br>".$conn->error;

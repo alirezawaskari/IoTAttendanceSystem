@@ -46,12 +46,14 @@
 		  echo "</tr>";
 		  }
 		echo "</table>";
+    echo "<br/>";
+    echo '<button onclick="location.href=\'clear.php\';">Clear Logs</button>';
 		echo "</center>";
       } else {
         echo "0 results";
       }
       
       mysqli_close($conn);
-    ?> 
+    ?>
   </body>
 </html>

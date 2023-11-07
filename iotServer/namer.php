@@ -5,9 +5,10 @@ $dbname = "test";
 $usrname = "root";
 $passwd = "";
 
-if (isset($_GET['id'])){
+if (isset($_GET['id'], $_GET['name'])){
 	// Get data
 	$data = $_GET['id'];
+	$name = $_GET['name'];
 
 	// Define connection
 	$conn = new mysqli($hostname,$usrname,$passwd,$dbname);
@@ -18,10 +19,11 @@ if (isset($_GET['id'])){
 	}
 
 	// DB query
-	$sql = "DELETE FROM `stats` WHERE `id` ='$data';";
+	$sql = "UPDATE `stats` SET `name` = '$name' WHERE `stats`.`id` = '$data'; ";
 
 	// Send query
 	if ($conn->query($sql) === TRUE) {
+		header('Location: /name.php');
 	  return "New record creatd successfully";
 	}
 	else {
@@ -29,3 +31,4 @@ if (isset($_GET['id'])){
 	}
 	mysqli_close($conn);
 }
+?>
